@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Review Detector</title>
+    <style>
+        /* Reset */
+        body, h1, form, textarea, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        /* Form Styling */
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1em;
+            resize: none;
+            outline: none;
+            color: #333;
+            background: #f7f7f7;
+            margin-bottom: 20px;
+        }
+
+        textarea::placeholder {
+            color: #aaa;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #f09819, #ff512f);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff512f, #f09819);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4caf50;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        // Basic Frontend Form Validation
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.querySelector("form");
+            const textarea = document.querySelector("textarea");
+            const resultDiv = document.querySelector(".result");
+
+            form.addEventListener("submit", (event) => {
+                if (textarea.value.trim() === "") {
+                    event.preventDefault();
+                    alert("Please enter a review before submitting!");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Fake Review Detector</h1>
+    <form action="/predict" method="post">
+        <textarea name="reviewText" placeholder="Enter your review here..." required></textarea><br>
+        <button type="submit">Check Review</button>
+    </form>
+
+    <!-- Displaying the result after form submission -->
+    {% if prediction_text %}
+    <div class="result">
+        <p>{{ prediction_text }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>
